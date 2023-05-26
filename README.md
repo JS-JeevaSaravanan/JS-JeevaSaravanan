@@ -21,3 +21,7 @@ Here are some ideas to get you started:
 
 <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs/?username=JS-JeevaSaravanan&layout=compact&langs_count=10&count_private=true&include_all_commits=true"/>
 
+
+
+[![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=JS-JeevaSaravanan)](https://git.io/streak-stats)
+
