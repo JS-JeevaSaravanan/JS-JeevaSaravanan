@@ -1,26 +1,35 @@
 name: Update GitHub Metrics
+
 on:
-  # Schedule updates (each day)
-  schedule: [{cron: "5 0/4 * * *"}]
-  # Lines below let you run workflow manually and on each commit
+  # Schedule updates (every 4 hours)
+  schedule:
+    - cron: "5 0/4 * * *" # Runs at 5 minutes past every 4th hour
+  # Allow manual triggering and run on pushes to main/master branches
   workflow_dispatch:
-  push: {branches: ["master", "main"]}
+  push:
+    branches:
+      - "master"
+      - "main"
+
 jobs:
   github-metrics:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      # Step 1: Use the Metrics action
+      - name: Generate GitHub Metrics
+        uses: lowlighter/metrics@latest
         with:
-          # Your GitHub token
+          # GitHub token for authentication
           token: ${{ secrets.METRICS_TOKEN }}
 
-          # Options
-          user: 2kabhishek
+          # User Configuration
+          user: JS-JeevaSaravanan
           template: classic
           base: ""
-          config_timezone: Asia/Calcutta
+          config_timezone: Asia/Kolkata
           filename: assets/gen/metrics.svg
-          
+
+          # Plugin Configuration
           plugin_languages: yes
           plugin_languages_analysis_timeout: 15
           plugin_languages_sections: most-used, recently-used
@@ -33,7 +42,8 @@ jobs:
           plugin_languages_recent_load: 1000
           plugin_languages_threshold: 0%
           plugin_languages_indepth: yes
-          commits_authoring: Abhishek Keshri, 2kabhishek, 2kabhishek@users.noreply.github.com
           plugin_languages_details: lines, percentage
           plugin_languages_other: no
-          
+
+          # Commit Authoring Configuration
+          commits_authoring: Jeeva Saravanan, JS-JeevaSaravanan, jeevatamil2000@users.noreply.github.com
