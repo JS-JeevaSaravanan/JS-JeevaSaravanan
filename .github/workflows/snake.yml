@@ -2,34 +2,41 @@ name: Generate Snake Contributions
 
 on:
   schedule:
-    - cron: '30 23 * * *'
-
-  workflow_dispatch:
-  push: {branches: ["master", "main"]}
+    - cron: '30 23 * * *' # Run daily at 11:30 PM UTC
+  workflow_dispatch: # Allow manual triggering
+  push:
+    branches:
+      - "master"
+      - "main" # Trigger on pushes to master or main
 
 jobs:
-  snake:
+  generate_snake:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Generate Snake
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      # Step 2: Generate the Snake Contribution SVG
+      - name: Generate Snake Contribution Animation
         uses: Platane/snk/svg-only@v2
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             assets/gen/snake.svg?color_snake=#020080&color_dots=#888,#09b43a,#efb041,#ff6969,#1688f0
-      # Commit the changes
-      - name: Commit files
+      
+      # Step 3: Commit the generated Snake animation
+      - name: Commit Updated Snake Animation
         run: |
-          git config --local user.email "2kabhishek@users.noreply.github.com"
-          git config --local user.name "Abhishek via github-actions"
-          git add .
-          git commit -m "docs: Update Snake Contribution Animation"
+          git config --local user.email "jeevatamil2000@users.noreply.github.com"
+          git config --local user.name "Jeeva Saravanan via GitHub Actions"
+          git add assets/gen/snake.svg
+          git commit -m "chore: Update Snake Contribution Animation"
           git pull --rebase --autostash
-      # Push the changes
-      - name: Push
-        uses: ad-m/github-push-action@master
+      
+      # Step 4: Push the changes back to the repository
+      - name: Push Changes
+        uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          branch: ${{ github.ref_name }}
